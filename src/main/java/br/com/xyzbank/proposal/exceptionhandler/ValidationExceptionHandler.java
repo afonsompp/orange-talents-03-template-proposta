@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,6 +33,21 @@ public class ValidationExceptionHandler {
 				LocaleContextHolder.getLocale());
 
 		return new ObjectError(message, HttpStatus.BAD_REQUEST.value(), errors);
+
+	}
+
+	@ExceptionHandler(ApiErrorException.class)
+	public ResponseEntity<ObjectError> apiHandler(ApiErrorException e) {
+		List<FieldErrors> response = new ArrayList<>();
+		response.add(new FieldErrors(e.getField(), e.getReason()));
+		String message = messageSource.getMessage(
+				invalidData, null,
+				LocaleContextHolder.getLocale());
+
+		return ResponseEntity.status(
+				HttpStatus.UNPROCESSABLE_ENTITY)
+				.body(new ObjectError(message, HttpStatus.UNPROCESSABLE_ENTITY.value(),
+						response));
 
 	}
 

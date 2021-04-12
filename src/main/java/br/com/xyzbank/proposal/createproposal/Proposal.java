@@ -17,7 +17,7 @@ public class Proposal {
 	private String name;
 	@Column(nullable = false)
 	private String email;
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String idCard;
 	@Column(nullable = false)
 	private BigDecimal salary;
