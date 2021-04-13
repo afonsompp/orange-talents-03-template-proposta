@@ -3,6 +3,8 @@ package br.com.xyzbank.proposal.createproposal;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,6 +35,9 @@ public class Proposal {
 	private String state;
 	@Column(nullable = false)
 	private String country;
+
+	@Enumerated(EnumType.STRING)
+	private ProposalStatus status;
 
 	@Deprecated
 	public Proposal() {
@@ -95,6 +100,14 @@ public class Proposal {
 
 	public String getCountry() {
 		return this.country;
+	}
+
+	public ProposalStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ProposalStatus status) {
+		this.status = status;
 	}
 
 }
