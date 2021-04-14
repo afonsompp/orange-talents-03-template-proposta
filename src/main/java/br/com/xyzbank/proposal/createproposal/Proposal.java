@@ -1,6 +1,7 @@
 package br.com.xyzbank.proposal.createproposal;
 
 import java.math.BigDecimal;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,6 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Proposal {
@@ -38,6 +41,10 @@ public class Proposal {
 
 	@Enumerated(EnumType.STRING)
 	private ProposalStatus status;
+
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(unique = true)
+	private Card card;
 
 	@Deprecated
 	public Proposal() {
@@ -100,6 +107,14 @@ public class Proposal {
 
 	public String getCountry() {
 		return this.country;
+	}
+
+	public Card getCard() {
+		return card;
+	}
+
+	public void setCard(Card card) {
+		this.card = card;
 	}
 
 	public ProposalStatus getStatus() {
