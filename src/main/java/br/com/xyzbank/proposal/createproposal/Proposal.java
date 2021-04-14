@@ -1,6 +1,7 @@
 package br.com.xyzbank.proposal.createproposal;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,7 +43,7 @@ public class Proposal {
 	@Enumerated(EnumType.STRING)
 	private ProposalStatus status;
 
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(unique = true)
 	private Card card;
 
@@ -123,6 +124,22 @@ public class Proposal {
 
 	public void setStatus(ProposalStatus status) {
 		this.status = status;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this)
+			return true;
+		if (!(o instanceof Proposal)) {
+			return false;
+		}
+		Proposal proposal = (Proposal) o;
+		return id.equals(proposal.id) && idCard.equals(proposal.idCard);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, idCard);
 	}
 
 }
