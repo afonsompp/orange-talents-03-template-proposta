@@ -28,7 +28,7 @@ public class ProposalController {
 		this.solicitation = solicitation;
 	}
 
-	@PostMapping
+	@PostMapping("/step-1")
 	public ResponseEntity<ProposalResponse> save(
 			@RequestBody @Valid ProposalRequest dto,
 			@Value("${api.exception.raeson}") String reason) {
@@ -46,7 +46,7 @@ public class ProposalController {
 		return ResponseEntity.created(url).body(new ProposalResponse(proposal));
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/step-2/{id}")
 	public ResponseEntity<ProposalStatusResponse> reviewProposal(
 			@PathVariable("id") Long id) {
 		var optional = repository.findById(id);
@@ -64,6 +64,17 @@ public class ProposalController {
 		var response = repository.save(proposal);
 
 		return ResponseEntity.ok(new ProposalStatusResponse(response));
+
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<ProposalDetailResponse> showProposal(
+			@PathVariable("id") Long id) {
+		var optional = repository.findById(id);
+		var proposal = optional
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+		return ResponseEntity.ok(new ProposalDetailResponse(proposal));
 
 	}
 }
