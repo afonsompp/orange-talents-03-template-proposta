@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "card", url = "http://localhost:8888")
+@FeignClient(name = "card", url = "http://${contas.host}:${contas.port}")
 public interface VerifyCardFeign {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/api/cartoes")
