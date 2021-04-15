@@ -3,6 +3,8 @@ services:
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:5.2.1"
+    networks:
+      - proposal-network
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -10,6 +12,8 @@ services:
 
   kafka:
     image: "confluentinc/cp-kafka:5.2.1"
+    networks:
+      - proposal-network
     ports:
       - 9092:9092
     depends_on:
@@ -24,6 +28,8 @@ services:
 
   postgres:
     image: 'postgres:alpine'
+    networks:
+      - proposal-network
     volumes:
       - postgres-volume:/var/lib/postgresql/data
     ports:
@@ -36,6 +42,8 @@ services:
 
   keycloak:
     image: jboss/keycloak
+    networks:
+      - proposal-network
     ports:
       - 18443:8443
       - 18080:8080
@@ -64,6 +72,8 @@ services:
 
   analise:
     image: 'zupacademy/analise-financeira'
+    networks:
+      - proposal-network
     ports:
       - 9999:9999
     environment:
@@ -74,6 +84,8 @@ services:
 
   contas:
     image: 'zupacademy/contas'
+    networks:
+      - proposal-network
     ports:
       - 8888:8888
     environment:
@@ -83,6 +95,8 @@ services:
 
   transacoes:
     image: 'zupacademy/transacoes'
+    networks:
+      - proposal-network
     ports:
       - 7777:7777
     depends_on:
@@ -95,6 +109,8 @@ services:
 
   jaeger:
     image: jaegertracing/all-in-one
+    networks:
+      - proposal-network
     ports:
       - 5775:5775/udp
       - 6831:6831/udp
@@ -109,17 +125,19 @@ services:
 
   prometheus:
     image: prom/prometheus
+    networks:
+      - proposal-network
     volumes:
      - prometheus-volume:/etc/prometheus/
-    network_mode: bridge
     ports:
       - "9090:9090"
 
   grafana:
     image: grafana/grafana
+    networks:
+      - proposal-network
     volumes:
       - grafana-volume:/var/lib/grafana
-    network_mode: bridge
     ports:
       - "3000:3000"
     depends_on:
@@ -127,13 +145,57 @@ services:
 
   vault:
     image: vault:1.5.3
+    networks:
+      - proposal-network
     ports:
       - 8200:8200
     environment:
       VAULT_DEV_ROOT_TOKEN_ID: ee413645-dbe8-4848-afc6-6bb2768ada75
       VAULT_TOKEN: ee413645-dbe8-4848-afc6-6bb2768ada75
       VAULT_ADDR: http://127.0.0.1:8200
+
+  mysqldb:
+    image: mysql:8.0.23
+    ports:
+      - "3050:3306"
+    volumes:
+      - mysql-volume:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=proposal
+    networks:
+      - proposal-network
+
+  proposal:
+    build:
+      dockerfile: DockerFile
+      context: .
+    image: afonsompp/proposal
+    container_name: proposal
+    networks:
+      - proposal-network
+    ports:
+      - "8081:8080"
+    depends_on:
+      - "mysqldb"
+    environment:
+      CONTAS_HOST: contas
+      CONTAS_PORT: 8888
+      ANALISE_HOST: analise
+      ANALISE_PORT: 9999
+      TRANSACOES_HOST: transacoes
+      TRANSACOES_PORT: 7777
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_URL: jdbc:mysql://mysqldb:3306/proposal?createDatabaseIfNotExist=true
+      ACTIVE_PROFILE: docker
+
 volumes:
   grafana-volume:
   prometheus-volume:
   postgres-volume:
+  mysql-volume:
+
+networks:
+  proposal-network:
+    driver: bridge
