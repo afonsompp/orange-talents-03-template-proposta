@@ -17,7 +17,8 @@ public class ValidationExceptionHandler {
 
 	private final MessageSource messageSource;
 
-	private String invalidData = "invalid.data.message";
+	private final String invalidData = "invalid.data.message";
+	private final String apiException = "api.exception.message";
 
 	public ValidationExceptionHandler(MessageSource messageSource) {
 		this.messageSource = messageSource;
@@ -25,29 +26,23 @@ public class ValidationExceptionHandler {
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public ObjectError handler(MethodArgumentNotValidException exception) {
+	public ObjectFieldErrors handler(MethodArgumentNotValidException exception) {
 		List<FieldErrors> errors = extractFieldErrors(exception);
 
-		String message = messageSource.getMessage(
-				invalidData, null,
+		String message = messageSource.getMessage(invalidData, null,
 				LocaleContextHolder.getLocale());
 
-		return new ObjectError(message, HttpStatus.BAD_REQUEST.value(), errors);
+		return new ObjectFieldErrors(message, HttpStatus.BAD_REQUEST.value(), errors);
 
 	}
 
 	@ExceptionHandler(ApiErrorException.class)
 	public ResponseEntity<ObjectError> apiHandler(ApiErrorException e) {
-		List<FieldErrors> response = new ArrayList<>();
-		response.add(new FieldErrors(e.getField(), e.getReason()));
-		String message = messageSource.getMessage(
-				invalidData, null,
+		String message = messageSource.getMessage(apiException, null,
 				LocaleContextHolder.getLocale());
 
-		return ResponseEntity.status(
-				HttpStatus.UNPROCESSABLE_ENTITY)
-				.body(new ObjectError(message, HttpStatus.UNPROCESSABLE_ENTITY.value(),
-						response));
+		return ResponseEntity.status(e.getHttpStatus())
+				.body(new ObjectError(message, e.getHttpStatus().value(), e.getReason()));
 
 	}
 

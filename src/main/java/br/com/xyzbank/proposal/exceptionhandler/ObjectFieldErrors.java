@@ -1,20 +1,23 @@
 package br.com.xyzbank.proposal.exceptionhandler;
 
 import java.time.Instant;
+import java.util.List;
 
-public class ObjectError {
+public class ObjectFieldErrors {
 
 	private String message;
 	private Integer status;
 	private Instant instant;
-	private String error;
+	private List<FieldErrors> errors;
 
-	public ObjectError(String message, Integer status, String error) {
+	public ObjectFieldErrors(String message, Integer status, List<FieldErrors> errors) {
 		this.message = message;
 		this.status = status;
 		this.instant = Instant.now();
-		this.error = error;
+		this.errors = errors;
 	}
+
+	public ObjectFieldErrors() {}
 
 	public String getMessage() {
 		return this.message;
@@ -28,8 +31,7 @@ public class ObjectError {
 		return this.instant;
 	}
 
-	public String getError() {
-		return error;
+	public List<FieldErrors> getErrors() {
+		return errors;
 	}
-
 }
