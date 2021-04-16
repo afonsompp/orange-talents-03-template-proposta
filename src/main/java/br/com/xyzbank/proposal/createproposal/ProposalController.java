@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import br.com.xyzbank.proposal.exceptionhandler.ApiErrorException;
+import br.com.xyzbank.proposal.shered.exceptionhandler.ApiErrorException;
 import feign.FeignException.FeignClientException;
 
 @RestController

@@ -1,4 +1,4 @@
-package br.com.xyzbank.proposal.createproposal;
+package br.com.xyzbank.proposal.managecard;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;

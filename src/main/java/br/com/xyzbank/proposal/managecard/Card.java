@@ -1,4 +1,4 @@
-package br.com.xyzbank.proposal.createproposal;
+package br.com.xyzbank.proposal.managecard;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

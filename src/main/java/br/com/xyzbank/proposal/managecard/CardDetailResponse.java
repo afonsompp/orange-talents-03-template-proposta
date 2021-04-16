@@ -1,12 +1,11 @@
-package br.com.xyzbank.proposal.createproposal;
+package br.com.xyzbank.proposal.managecard;
 
 public class CardDetailResponse {
 
 	private Long id;
 	private String cardNumber;
 
-	public CardDetailResponse() {
-	}
+	public CardDetailResponse() {}
 
 	public CardDetailResponse(Card card) {
 		this.id = card.getId();

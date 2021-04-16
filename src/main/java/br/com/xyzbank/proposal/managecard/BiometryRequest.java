@@ -1,4 +1,4 @@
-package br.com.xyzbank.proposal.createproposal;
+package br.com.xyzbank.proposal.managecard;
 
 import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonCreator;

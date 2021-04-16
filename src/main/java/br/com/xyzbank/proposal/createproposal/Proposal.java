@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import br.com.xyzbank.proposal.managecard.Card;
 
 @Entity
 public class Proposal {

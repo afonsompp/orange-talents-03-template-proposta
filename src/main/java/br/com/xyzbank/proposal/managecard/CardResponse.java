@@ -1,4 +1,4 @@
-package br.com.xyzbank.proposal.createproposal;
+package br.com.xyzbank.proposal.managecard;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
@@ -6,8 +6,7 @@ public class CardResponse {
 
 	private String id;
 
-	public CardResponse() {
-	}
+	public CardResponse() {}
 
 	@JsonCreator
 	public CardResponse(String id) {

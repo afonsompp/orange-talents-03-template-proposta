@@ -1,9 +1,9 @@
-package br.com.xyzbank.proposal.createproposal;
+package br.com.xyzbank.proposal.managecard;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BiometryRepository extends JpaRepository<Biometry, Long> {
+public interface CardRepository extends JpaRepository<Card, Long> {
 
 }

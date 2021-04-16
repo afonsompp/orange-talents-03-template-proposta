@@ -1,4 +1,4 @@
-package br.com.xyzbank.proposal.createproposal;
+package br.com.xyzbank.proposal.managecard;
 
 import java.util.Base64;
 import org.springframework.beans.factory.annotation.Value;

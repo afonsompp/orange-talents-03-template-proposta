@@ -3,6 +3,7 @@ package br.com.xyzbank.proposal.createproposal;
 import java.math.BigDecimal;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import br.com.xyzbank.proposal.managecard.CardDetailResponse;
 
 @JsonInclude(Include.NON_NULL)
 public class ProposalDetailResponse {

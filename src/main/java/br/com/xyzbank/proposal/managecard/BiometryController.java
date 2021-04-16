@@ -1,4 +1,4 @@
-package br.com.xyzbank.proposal.createproposal;
+package br.com.xyzbank.proposal.managecard;
 
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;

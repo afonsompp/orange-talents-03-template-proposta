@@ -1,4 +1,4 @@
-package br.com.xyzbank.proposal.createproposal;
+package br.com.xyzbank.proposal.managecard;
 
 import java.time.Instant;
 import javax.persistence.Column;
@@ -26,8 +26,7 @@ public class Biometry {
 	private Instant createdAt;
 
 	@Deprecated
-	public Biometry() {
-	}
+	public Biometry() {}
 
 	public Biometry(String biometry, Card card) {
 		this.biometry = biometry;

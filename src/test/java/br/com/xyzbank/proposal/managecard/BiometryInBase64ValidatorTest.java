@@ -1,4 +1,4 @@
-package br.com.xyzbank.proposal.createproposal;
+package br.com.xyzbank.proposal.managecard;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.stream.Stream;
