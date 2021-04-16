@@ -31,7 +31,7 @@ public class ProposalController {
 	@PostMapping("/step-1")
 	public ResponseEntity<ProposalResponse> save(
 			@RequestBody @Valid ProposalRequest dto,
-			@Value("${api.exception.raeson}") String reason) {
+			@Value("${proposal.apiException}") String reason) {
 
 		if (repository.findByIdCard(dto.getIdCard()).isPresent()) {
 			throw new ApiErrorException(HttpStatus.UNPROCESSABLE_ENTITY, reason,
