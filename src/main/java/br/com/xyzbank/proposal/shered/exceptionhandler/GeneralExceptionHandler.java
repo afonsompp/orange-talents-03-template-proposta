@@ -1,4 +1,4 @@
-package br.com.xyzbank.proposal.exceptionhandler;
+package br.com.xyzbank.proposal.shered.exceptionhandler;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

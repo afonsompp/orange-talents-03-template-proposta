@@ -1,4 +1,4 @@
-package br.com.xyzbank.proposal.exceptionhandler;
+package br.com.xyzbank.proposal.shered.exceptionhandler;
 
 import java.util.ArrayList;
 import java.util.List;

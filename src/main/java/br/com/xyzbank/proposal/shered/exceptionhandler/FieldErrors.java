@@ -1,4 +1,4 @@
-package br.com.xyzbank.proposal.exceptionhandler;
+package br.com.xyzbank.proposal.shered.exceptionhandler;
 
 public class FieldErrors {
 
