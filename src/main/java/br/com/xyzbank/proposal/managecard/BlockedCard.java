@@ -3,6 +3,8 @@ package br.com.xyzbank.proposal.managecard;
 import java.time.Instant;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,6 +23,8 @@ public class BlockedCard {
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
 	private Instant createdAt;
+	@Enumerated(EnumType.STRING)
+	BlockedCardStatus status = BlockedCardStatus.WAITING;
 
 	@Deprecated
 	public BlockedCard() {}
@@ -46,4 +50,11 @@ public class BlockedCard {
 		return this.createdAt;
 	}
 
+	public BlockedCardStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(BlockedCardStatus status) {
+		this.status = status;
+	}
 }

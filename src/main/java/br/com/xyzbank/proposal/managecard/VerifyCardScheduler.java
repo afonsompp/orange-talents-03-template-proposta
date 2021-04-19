@@ -11,10 +11,9 @@ import feign.FeignException.FeignServerException;
 public class VerifyCardScheduler {
 
 	private final ProposalRepository repository;
-	private final VerifyCardFeign verifyCard;
+	private final CardFeign verifyCard;
 
-	public VerifyCardScheduler(ProposalRepository repository,
-			VerifyCardFeign verifyCard) {
+	public VerifyCardScheduler(ProposalRepository repository, CardFeign verifyCard) {
 
 		this.repository = repository;
 		this.verifyCard = verifyCard;
