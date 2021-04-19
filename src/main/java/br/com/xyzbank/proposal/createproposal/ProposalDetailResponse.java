@@ -3,7 +3,6 @@ package br.com.xyzbank.proposal.createproposal;
 import java.math.BigDecimal;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import br.com.xyzbank.proposal.managecard.CardDetailResponse;
 
 @JsonInclude(Include.NON_NULL)
 public class ProposalDetailResponse {
@@ -15,7 +14,6 @@ public class ProposalDetailResponse {
 	private BigDecimal salary;
 	private ProposalStatus status;
 	private AddressRequest address;
-	private CardDetailResponse card;
 
 	@Deprecated
 	public ProposalDetailResponse() {
@@ -32,7 +30,6 @@ public class ProposalDetailResponse {
 		this.address = new AddressRequest(proposal.getStreet(), proposal.getNumber(),
 				proposal.getZipCode(), proposal.getCity(), proposal.getState(),
 				proposal.getCountry());
-		this.card = new CardDetailResponse(proposal.getCard());
 	}
 
 	public Long getId() {
@@ -61,10 +58,6 @@ public class ProposalDetailResponse {
 
 	public AddressRequest getAddress() {
 		return this.address;
-	}
-
-	public CardDetailResponse getCard() {
-		return card;
 	}
 
 }
