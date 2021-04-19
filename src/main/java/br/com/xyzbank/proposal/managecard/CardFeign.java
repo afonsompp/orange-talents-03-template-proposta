@@ -17,4 +17,9 @@ public interface CardFeign {
 			consumes = "application/json")
 	BlockedCardResponse blockCard(@PathVariable("id") String id,
 			@RequestBody BlockedCardRequest dto);
+
+	@RequestMapping(method = RequestMethod.POST, value = "/api/cartoes/{id}/avisos",
+			consumes = "application/json")
+	NotifyTravelFeignResponse notifyTravel(@PathVariable("id") String id,
+			@RequestBody NotifyTravelFeignRequest dto);
 }

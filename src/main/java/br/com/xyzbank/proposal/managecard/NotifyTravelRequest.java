@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class NotifyTravelRequest {
 
@@ -12,7 +11,6 @@ public class NotifyTravelRequest {
 	private String destination;
 	@FutureOrPresent
 	@NotNull
-	@JsonFormat(pattern = "dd/MM/yyy")
 	private LocalDate date;
 
 	@Deprecated
@@ -35,5 +33,9 @@ public class NotifyTravelRequest {
 
 	public NotifyTravel toNotifyTravel(String ip, String userAgent) {
 		return new NotifyTravel(destination, date, ip, userAgent);
+	}
+
+	public NotifyTravelFeignRequest toNotifyTravelFeign() {
+		return new NotifyTravelFeignRequest(destination, date.toString());
 	}
 }

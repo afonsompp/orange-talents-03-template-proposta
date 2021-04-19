@@ -11,15 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import br.com.xyzbank.proposal.shered.exceptionhandler.ApiErrorException;
+import feign.FeignException.FeignClientException;
+import feign.FeignException.FeignServerException;
 
 @RestController
 @RequestMapping("/api/card")
 public class CardController {
 
 	private final CardRepository cardRepository;
+	private final CardFeign feignCard;
 
-	public CardController(CardRepository cardRepository) {
+	public CardController(CardRepository cardRepository, CardFeign feignCard) {
 		this.cardRepository = cardRepository;
+		this.feignCard = feignCard;
 	}
 
 	@PostMapping("/{id}/block")
@@ -42,9 +46,19 @@ public class CardController {
 		var card = cardRepository.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-		card.setTravel(dto.toNotifyTravel(request.getRemoteAddr(),
-				request.getHeader("User-Agent")));
-		cardRepository.save(card);
+		try {
+			var a = dto.toNotifyTravelFeign();
+			var response = feignCard.notifyTravel(card.getCardNumber(), a);
+
+			if (!response.isNotified())
+				return ResponseEntity.badRequest().build();
+
+			card.setTravel(dto.toNotifyTravel(request.getRemoteAddr(),
+					request.getHeader("User-Agent")));
+			cardRepository.save(card);
+		} catch (FeignClientException | FeignServerException e) {
+			return ResponseEntity.badRequest().build();
+		}
 
 		return ResponseEntity.ok().build();
 	}
