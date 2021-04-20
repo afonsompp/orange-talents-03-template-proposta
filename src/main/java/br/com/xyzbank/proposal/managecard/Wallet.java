@@ -5,14 +5,17 @@ import org.springframework.http.HttpStatus;
 import br.com.xyzbank.proposal.shered.exceptionhandler.ApiErrorException;
 
 public enum Wallet {
-	PAYPAL;
+	PAYPAL,
+	SAMSUNG_PAY;
 
 	@JsonCreator
 	public static Wallet fromString(String value) {
 		if (value == null)
 			throw new ApiErrorException(HttpStatus.BAD_REQUEST, "Invalid value");
-		if (value.equalsIgnoreCase("paypal")) {
-			return PAYPAL;
+		for (var wallet : values()) {
+			if (value.equalsIgnoreCase(wallet.toString())) {
+				return wallet;
+			}
 		}
 		throw new ApiErrorException(HttpStatus.BAD_REQUEST, "Invalid value");
 	}
