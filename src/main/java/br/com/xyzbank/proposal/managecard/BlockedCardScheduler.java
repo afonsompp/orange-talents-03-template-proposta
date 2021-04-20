@@ -7,14 +7,14 @@ import feign.FeignException.FeignClientException;
 import feign.FeignException.FeignServerException;
 
 @Service
-public class BlockedyCardScheduler {
+public class BlockedCardScheduler {
 
 	private final CardRepository repository;
 	private final CardFeign verifyCard;
 	@Value("${application.name}")
 	public String system;
 
-	public BlockedyCardScheduler(CardRepository repository, CardFeign verifyCard) {
+	public BlockedCardScheduler(CardRepository repository, CardFeign verifyCard) {
 		this.repository = repository;
 		this.verifyCard = verifyCard;
 	}
