@@ -181,6 +181,9 @@ services:
       - "mysqldb"
       - "keycloak"
     environment:
+      JAEGER_ENDPOINT: http://jaeger:14268/api/traces
+      JEAGER_HOST: jaeger
+      JEAGER_PORT: 6831
       CONTAS_HOST: contas
       CONTAS_PORT: 8888
       ANALISE_HOST: analise
