@@ -22,4 +22,9 @@ public interface CardFeign {
 			consumes = "application/json")
 	NotifyTravelFeignResponse notifyTravel(@PathVariable("id") String id,
 			@RequestBody NotifyTravelFeignRequest dto);
+
+	@RequestMapping(method = RequestMethod.POST, value = "/api/cartoes/{id}/carteiras",
+			consumes = "application/json")
+	WalletAssociationResponse walletAssociation(@PathVariable("id") String id,
+			@RequestBody WalletAssociationRequest dto);
 }
