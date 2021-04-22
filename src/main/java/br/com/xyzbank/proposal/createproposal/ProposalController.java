@@ -1,10 +1,11 @@
 package br.com.xyzbank.proposal.createproposal;
 
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import br.com.xyzbank.proposal.shered.exceptionhandler.ApiErrorException;
 import feign.FeignException.FeignClientException;
 
 @RestController
@@ -21,23 +21,23 @@ public class ProposalController {
 
 	private final ProposalRepository repository;
 	private final SolicitationFeign solicitation;
+	private IdcardExistsValidator validator;
 
 	public ProposalController(ProposalRepository repository,
-			SolicitationFeign solicitation) {
+			SolicitationFeign solicitation, IdcardExistsValidator validator) {
 		this.repository = repository;
 		this.solicitation = solicitation;
+		this.validator = validator;
+	}
+
+	@InitBinder
+	public void binder(WebDataBinder binder) {
+		binder.addValidators(validator);
 	}
 
 	@PostMapping("/step-1")
 	public ResponseEntity<ProposalResponse> save(
-			@RequestBody @Valid ProposalRequest dto,
-			@Value("${proposal.apiException}") String reason) {
-
-		if (repository.findByIdCard(dto.getIdCard()).isPresent()) {
-			throw new ApiErrorException(HttpStatus.UNPROCESSABLE_ENTITY, reason,
-					"idCard");
-		}
-
+			@RequestBody @Valid ProposalRequest dto) {
 		var proposal = repository.save(dto.toProposal());
 
 		var url = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")

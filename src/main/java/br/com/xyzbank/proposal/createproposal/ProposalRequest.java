@@ -6,6 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import br.com.xyzbank.proposal.shered.util.BcryptEncoder;
 import br.com.xyzbank.proposal.shered.validation.CpfOrCnpj;
 
 public class ProposalRequest {
@@ -59,7 +60,8 @@ public class ProposalRequest {
 	}
 
 	public Proposal toProposal() {
-		return new Proposal(name, email, idCard, salary, address);
+		return new Proposal(name, email, BcryptEncoder.encodeIfPlainText(idCard), salary,
+				address);
 	}
 
 }

@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import br.com.xyzbank.proposal.managecard.Card;
+import br.com.xyzbank.proposal.shered.util.BcryptEncoder;
 
 @Entity
 public class Proposal {
@@ -57,7 +58,7 @@ public class Proposal {
 			AddressRequest address) {
 		this.name = name;
 		this.email = email;
-		this.idCard = idCard;
+		this.idCard = BcryptEncoder.encodeIfPlainText(idCard);
 		this.salary = salary;
 		this.street = address.getStreet();
 		this.number = address.getNumber();
