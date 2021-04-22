@@ -32,27 +32,6 @@ class ProposalRepositoryTest {
 		repository.deleteAll();
 	}
 
-	@DisplayName("Should return id card when exists")
-	@ParameterizedTest
-	@MethodSource("provideProposalIdcard")
-	void test1(String find, Boolean exists) {
-		Proposal p = new Proposal("", "", "111.111.111-11", new BigDecimal(5),
-				new AddressRequest("street", "number", "zipCode", "city", "state",
-						"country"));
-		var result = repository.save(p);
-		var proposal = repository.findByIdCard(find);
-
-		assertEquals(exists, proposal.isPresent());
-		if (proposal.isPresent())
-			assertEquals(result, proposal.get());
-	}
-
-	private static Stream<Arguments> provideProposalIdcard() {
-		return Stream.of(
-				Arguments.of("111.111.111-11", true),
-				Arguments.of("111.111.111-12", false));
-	}
-
 	@DisplayName("Should return proposal when she goes eligible and have no associate card")
 	@ParameterizedTest
 	@MethodSource("provideProposalStatusAndCard")
