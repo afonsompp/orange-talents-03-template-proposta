@@ -7,7 +7,6 @@ public class ProposalResponse {
 	private Long id;
 	private String name;
 	private String email;
-	private String idCard;
 	private BigDecimal salary;
 	private AddressRequest address;
 
@@ -20,7 +19,6 @@ public class ProposalResponse {
 		this.id = proposal.getId();
 		this.name = proposal.getName();
 		this.email = proposal.getEmail();
-		this.idCard = proposal.getIdCard();
 		this.salary = proposal.getSalary();
 		this.address = new AddressRequest(proposal.getStreet(), proposal.getNumber(),
 				proposal.getZipCode(), proposal.getCity(), proposal.getState(),
@@ -37,10 +35,6 @@ public class ProposalResponse {
 
 	public String getEmail() {
 		return this.email;
-	}
-
-	public String getIdCard() {
-		return this.idCard;
 	}
 
 	public BigDecimal getSalary() {
